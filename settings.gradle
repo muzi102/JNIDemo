@@ -1,0 +1,3 @@
+include ':androidfmmpeg'
+include ':app'
+rootProject.name = "JNIDemo"
