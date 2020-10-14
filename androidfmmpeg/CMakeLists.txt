@@ -6,7 +6,6 @@ add_library(
         SHARED
         src/main/cpp/muzi-lib.cpp
         src/main/cpp/JavaListener.cpp
-
 )
 
 find_library(
@@ -16,5 +15,6 @@ find_library(
 
 target_link_libraries(
         muzi-lib
+        OpenSLES
         ${log-lib}
 )

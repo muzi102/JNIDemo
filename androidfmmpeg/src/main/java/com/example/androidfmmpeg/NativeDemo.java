@@ -15,9 +15,12 @@ public class NativeDemo {
     }
 
     public native void n_textThread();
+
     public native void n_textMutexThread();
+
     public native void onErrorCallBackFromC();
 
+    public native void n_testOpenSLES(String path);
 
 
     /**
@@ -31,7 +34,6 @@ public class NativeDemo {
             onErrorListener.onError(code, msg);
         }
     }
-
 
 
     public void setOnErrorListener(OnErrorListener onErrorListener) {
