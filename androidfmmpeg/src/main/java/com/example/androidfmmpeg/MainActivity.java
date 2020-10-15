@@ -3,7 +3,6 @@ package com.example.androidfmmpeg;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 
@@ -27,10 +26,10 @@ public class MainActivity extends AppCompatActivity implements NativeDemo.OnErro
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         musicPath = "/sdcard/music/mydream.pcm";
-        File file=new File(musicPath);
-        if (file.isFile()){
+        File file = new File(musicPath);
+        if (file.isFile()) {
             Log.d("muzi102", "文件存在");
-        }else {
+        } else {
             Log.d("muzi102", "文件不存在");
         }
         nativeDemo = new NativeDemo();
@@ -46,14 +45,19 @@ public class MainActivity extends AppCompatActivity implements NativeDemo.OnErro
         nativeDemo.n_textThread();
     }
 
-
+    //生产者消费者
     public void testMutexThread(View view) {
         nativeDemo.n_textMutexThread();
     }
 
-
+    //C++调用Jave实现回调
     public void testCallBackFromC(View view) {
         nativeDemo.onErrorCallBackFromC();
+    }
+
+    //OpenSL ES 进行PCM音频文件播放
+    public void OpenSLES(View view) {
+        nativeDemo.n_testOpenSLES(musicPath);
     }
 
     @Override
@@ -61,9 +65,6 @@ public class MainActivity extends AppCompatActivity implements NativeDemo.OnErro
         Log.d("muzi102", "MainActivity 收到回调信息 code=" + code + " msg=" + msg);
     }
 
-    public void OpenSLES(View view) {
-        nativeDemo.n_testOpenSLES(musicPath);
-    }
 
     //然后通过一个函数来申请
     public static void verifyStoragePermissions(Activity activity) {

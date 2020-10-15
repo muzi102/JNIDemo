@@ -143,6 +143,7 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
  * 6 启动回调函数
  */
 
+//309219417906
 //引擎接口
 SLObjectItf engineObject = nullptr;
 SLEngineItf engineEngine = nullptr;
@@ -160,28 +161,29 @@ SLAndroidSimpleBufferQueueItf pcmBufferQueue;
 FILE *pcmFile;
 void *buffer;
 uint8_t *out_buffer;
-
+int count = 0;
 int getPcmData(void **pcm) {
+    LOGD("读取 = %d", count)
     int size = 0;
     while (!feof(pcmFile)) {
         size = fread(out_buffer, 1, 44100 * 2 * 2, pcmFile);
         if (out_buffer == nullptr) {
-            LOGD("%s", "read end")
             break;
         } else {
-            LOGD("%s", "reading")
         }
         *pcm = out_buffer;
+        count++;
         break;
     }
     return size;
 }
 
+
+
 void pcmBufferCallBack(SLAndroidSimpleBufferQueueItf btf, void *context) {
     int size = getPcmData(&buffer);
     if (buffer != nullptr) {
         (*pcmBufferQueue)->Enqueue(pcmBufferQueue, buffer, size);
-
     }
 }
 
@@ -196,7 +198,6 @@ Java_com_example_androidfmmpeg_NativeDemo_n_1testOpenSLES(JNIEnv *env, jobject t
         return;
     }
     out_buffer = (uint8_t *) malloc(44100 * 2 * 2);
-
     SLresult result;
 
     /**
